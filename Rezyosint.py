@@ -206,11 +206,14 @@ def main():
         now = datetime.now()
         hari, bulan, tahun = now.strftime("%d"), now.strftime("%m"), now.strftime("%Y")
     menu = {
-        '1': cek_tlp,
-        '2': cek_ip,
-        '3': cek_usn,
-        '4': cek_myip,
-        '5': channel_wa,
+        '1': http_status,
+        '2': url_parser,
+        '3': website_info,
+        '4': cek_tlp,
+        '5': cek_ip,
+        '6': cek_usn,
+        '7': cek_myip,
+        '8': channel_wa,
     }
 
     while True:
