@@ -226,13 +226,13 @@ REZY OSINT
 {a}________________
     
     {h}[{m}1{h}]{k} HTTP Status Checker
-    {h}[{m}1{h}]{k} url_parser
-    {h}[{m}1{h}]{k} website_info
-    {h}[{m}1{h}]{k} Check Phone Number Information
-    {h}[{m}2{h}]{k} Check IP Address Information
-    {h}[{m}3{h}]{k} Check Username Information
-    {h}[{m}4{h}]{k} Check My IP Address
-    {h}[{m}5{h}]{k} Follow Byexe WhatsApp Channel
+    {h}[{m}2{h}]{k} url_parser
+    {h}[{m}3{h}]{k} website_info
+    {h}[{m}4{h}]{k} Check Phone Number Information
+    {h}[{m}5{h}]{k} Check IP Address Information
+    {h}[{m}6{h}]{k} Check Username Information
+    {h}[{m}7{h}]{k} Check My IP Address
+    {h}[{m}8{h}]{k} Follow Byexe WhatsApp Channel
     {h}[{m}0{h}]{k} Exit
 """)
         pilihan = input(f"    {h}[{m}>{h}]{k} Enter Choice {h}:{k} ").strip()
