@@ -9,6 +9,8 @@ import requests
 from urllib.parse import urlparse
 import socket
 from urllib.parse import urlparse
+import subprocess
+import os
 
 a = "\033[1;30m"
 m = "\033[1;31m"
@@ -18,6 +20,11 @@ c = "\033[1;36m"
 p = "\033[1;37m"
 r = "\033[0m"
 
+def bot_whatsapp():
+    os.system("clear")
+    print("Menjalankan Bot WhatsApp...\n")
+    subprocess.run(["node", "bot/bot.js"])
+    
 def http_status():
     url = input("URL : ").strip()
 
@@ -227,15 +234,16 @@ REZY OSINT
     {h} ☘︎ {m}:{k} 1.0.0
     {h} ⏱︎ {m}:{k} {hari}{m}-{k}{bulan}{m}-{k}{tahun}
 {a}________________
-    
-    {h}[{m}1{h}]{k} HTTP Status Checker
-    {h}[{m}2{h}]{k} url_parser
-    {h}[{m}3{h}]{k} website_info
-    {h}[{m}4{h}]{k} Check Phone Number Information
-    {h}[{m}5{h}]{k} Check IP Address Information
-    {h}[{m}6{h}]{k} Check Username Information
-    {h}[{m}7{h}]{k} Check My IP Address
-    {h}[{m}8{h}]{k} Follow Byexe WhatsApp Channel
+
+    {h}[{m}1{h}]{k} bot_whatsapp
+    {h}[{m}2{h}]{k} HTTP Status Checker
+    {h}[{m}3{h}]{k} url_parser
+    {h}[{m}4{h}]{k} website_info
+    {h}[{m}5{h}]{k} Check Phone Number Information
+    {h}[{m}6{h}]{k} Check IP Address Information
+    {h}[{m}7{h}]{k} Check Username Information
+    {h}[{m}8{h}]{k} Check My IP Address
+    {h}[{m}9{h}]{k} Follow Rezy WhatsApp Channel
     {h}[{m}0{h}]{k} Exit
 """)
         pilihan = input(f"    {h}[{m}>{h}]{k} Enter Choice {h}:{k} ").strip()
