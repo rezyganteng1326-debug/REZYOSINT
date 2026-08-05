@@ -213,14 +213,15 @@ def main():
         now = datetime.now()
         hari, bulan, tahun = now.strftime("%d"), now.strftime("%m"), now.strftime("%Y")
     menu = {
-        '1': http_status,
-        '2': url_parser,
-        '3': website_info,
-        '4': cek_tlp,
-        '5': cek_ip,
-        '6': cek_usn,
-        '7': cek_myip,
-        '8': channel_wa,
+        '1': bot_whatsapp
+        '2': http_status,
+        '3': url_parser,
+        '4': website_info,
+        '5': cek_tlp,
+        '6': cek_ip,
+        '7': cek_usn,
+        '8': cek_myip,
+        '9': channel_wa,
     }
 
     while True:
@@ -235,7 +236,7 @@ REZY OSINT
     {h} ⏱︎ {m}:{k} {hari}{m}-{k}{bulan}{m}-{k}{tahun}
 {a}________________
 
-    {h}[{m}1{h}]{k} bot_whatsapp
+    {h}[{m}1{h}]{k} bot_wawa
     {h}[{m}2{h}]{k} HTTP Status Checker
     {h}[{m}3{h}]{k} url_parser
     {h}[{m}4{h}]{k} website_info
