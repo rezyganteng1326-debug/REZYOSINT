@@ -1,6 +1,3 @@
-// ===================================================
-// BARIS 1: PASTE SCRIPT BARU DARI SINI
-// ===================================================
 const {
   default: makeWASocket,
   useMultiFileAuthState,
@@ -11,10 +8,8 @@ const {
 const qrcode = require("qrcode-terminal");
 const moment = require("moment");
 const readline = require("readline");
-const axios = require("axios");
-const speed = require('performance-now');
-const fs = require("fs");
 
+// Modul Readline
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -22,7 +17,6 @@ const rl = readline.createInterface({
 const question = (text) => new Promise((resolve) => rl.question(text, resolve));
 
 const BotName = 'Lexa';
-const nomorowner = '082223014661';
 
 async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState('session_baileys');
@@ -37,6 +31,7 @@ async function startBot() {
 
   conn.ev.on('creds.update', saveCreds);
 
+  // LOGIKA LOGIN PILIHAN
   if (!conn.authState.creds.registered) {
     console.log("\n========================================");
     console.log("       PILIH METODE LOGIN WHATSAPP      ");
@@ -58,6 +53,33 @@ async function startBot() {
         console.log(`========================================\n`);
       }, 3000);
 
+    } else {
+      console.log("\n[!] Menampilkan QR Code...");
+      conn.ev.on('connection.update', (update) => {
+        const { qr } = update;
+        if (qr) {
+          qrcode.generate(qr, { small: true });
+        }
+      });
+    }
+  }
+
+  // CONNECTION HANDLER TUNGGAL
+  conn.ev.on('connection.update', (update) => {
+    const { connection, lastDisconnect } = update;
+
+    if (connection === 'close') {
+      const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
+      if (shouldReconnect) {
+        startBot();
+      }
+    } else if (connection === 'open') {
+      console.log(`\n[ ${moment().format("HH:mm:ss")} ] ${BotName} Berhasil Terhubung!`);
+    }
+  });
+
+  // (LETAKKAN conn.ev.on('messages.upsert', ...) MILIKMU DI BAWAH SINI)
+  
     } else {
       console.log("\n[!] Menampilkan QR Code, silakan scan melalui WhatsApp...");
       conn.ev.on('connection.update', (update) => {
