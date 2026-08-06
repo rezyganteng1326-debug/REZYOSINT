@@ -93,7 +93,7 @@ startBot();
              
   + 'END:VCARD';
 
-async function startBot() {
+printQRInTerminal: false
   // Menggunakan authentication state modern berbasis multi-file
   const { state, saveCreds } = await useMultiFileAuthState('session_baileys');
   const { version } = await fetchLatestBaileysVersion();
