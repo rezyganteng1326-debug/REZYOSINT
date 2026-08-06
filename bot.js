@@ -462,7 +462,8 @@ Ketik .rules`;
 
     conn.sendMessage(id, intro, MessageType.text, { quoted: m });
   }
-      ────────────────
+    if (text.includes('intro')) {
+        let intro = `────────────────
 
 ╔════════════════════
 ║──────〘  *Intro* 〙───────
