@@ -449,11 +449,11 @@ _“jauhilah api neraka, walau hanya dengan bersedekah sebiji kurma (sedikit). J
     })
   }
 
-  //intro grup
-  if (text.includes('intro')) {
-    let intro = `────────────────
+// Intro grup
+if (text.includes('intro')) {
 
-Hai 👋
+    let intro = `Hai 👋
+
 Selamat datang di
 ${groupName}
 
@@ -461,25 +461,29 @@ Jangan lupa baca rules.
 Ketik .rules`;
 
     conn.sendMessage(id, intro, MessageType.text, { quoted: m });
-  }
     if (text.includes('intro')) {
-        let intro = `────────────────
-
+let intro = `────────────────
 ╔════════════════════
-║──────〘  *Intro* 〙───────
+║──────〘 *Intro* 〙───────
 ╠════════════════════
-╠≽️ *Nama*
-╠≽️ *Umur*
-╠≽️ *Asal Kota*
-╠≽️ *Gender*
-╠════════════════════
-║──────── *Lexa* ──────── 
-║  ▌│█║▌║▌║║▌║▌║█│▌▌│█║
-║  ▌│█║▌║▌║║▌║▌║█│▌▌│█║
+║➤ *Nama*
+║➤ *Umur*
+║➤ *Asal Kota*
+║➤ *Gender*
+╚════════════════════`;
+
+conn.sendMessage(id, intro, MessageType.text, { quoted: m });
+
+let lexa = `────────────────
 ║──────── *Lexa* ────────
-╠════════════════════
-╠════════════════════` , MessageType.text);
-  }
+║ ▌│█║▌║▌║║▌║▌║█│▌▌│█║
+║ ▌│█║▌║▌║║▌║▌║█│▌▌│█║
+║──────── *Lexa* ────────
+────────────────`;
+
+conn.sendMessage(id, lexa, MessageType.text, { quoted: m });
+
+    }
 
   //Tag
   if (text.includes('.Tagme')) {
