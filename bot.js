@@ -964,3 +964,521 @@ Haitian Creole = ht
 Hausa = ha
 Hawaiian = haw
 Hebrew = he or iw
+Hindi = hi
+Hmong = hmn
+Hungarian = hu
+Icelandic = is
+Igbo = ig
+Indonesian = id
+Irish = ga
+Italian = it
+Japanese = ja
+Javanese = jv
+Kannada = kn
+Kazakh = kk
+Khmer = km
+Kinyarwanda = rw
+Korean = ko
+Kurdish = ku
+Kyrgyz = ky
+Lao = lo
+Latin = la
+Latvian = lv
+Lithuanian = lt
+Luxembourgish = lb
+Macedonian = mk
+Malagasy = mg
+Malay = ms
+Malayalam = ml
+Maltese = mt
+Maori = mi
+Marathi = mr
+Mongolian = mn
+Myanmar (Burmese) = my
+Nepali = ne
+Norwegian = no
+Nyanja (Chichewa) = ny
+Odia (Oriya) = or
+Pashto = ps
+Persian = fa
+Polish = pl
+Portuguese (Portugal, Brazil) = pt
+Punjabi = pa
+Romanian = ro
+Russian = ru
+Samoan = sm
+Scots Gaelic = gd
+Serbian = sr
+Sesotho = st
+Shona = sn
+Sindhi = sd
+Sinhala (Sinhalese) = si
+Slovak = sk
+Slovenian = sl
+Somali = so
+Spanish = es
+Sundanese = su
+Swahili = sw
+Swedish = sv
+Tagalog (Filipino) = tl
+Tajik = tg
+Tamil = ta
+Tatar = tt
+Telugu = te
+Thai = th
+Turkish = tr
+Turkmen = tk
+Ukrainian = uk
+Urdu = ur
+Uyghur = ug
+Uzbek = uz
+Vietnamese = vi
+Welsh = cy
+Xhosa = xh
+Yiddish = yi
+Yoruba = yo
+Zulu = zu` , MessageType.text, { quoted: m });
+
+  }
+
+  //joox download
+  if (text.includes('.Joox')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh :: .joox akad - payung teduh_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.joox')) {
+    const teks = text.replace(/.joox /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/joox?q=${teks}&apikey=${tobzkey}`).then((res) => {
+      imageToBase64(res.data.result.thumb)
+        .then(
+          (ress) => {
+            var buf = Buffer.from(ress, 'base64')
+            var lagu = `{url: ${res.data.result.mp3} ,}`;
+            conn.sendMessage(id, '[ WAIT ] Mendownload...⏳ silahkan tunggu', MessageType.text, { quoted: m })
+            let hasil = `Klik link dan download hasilnya!\n*Judul* : ${res.data.result.album} - ${res.data.result.judul}\n*Link* : ${res.data.result.mp3}`;
+            conn.sendMessage(id, buf, MessageType.image, { quoted: m, caption: hasil })
+            conn.sendMessage(id, lagu, MessageType.audio, { mimetype: 'audio/mp4', filename: `${data.result.judul}.mp3`, quoted: m })
+          })
+    })
+  }
+  //Twitter download
+  if (text.includes('.Twt')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .twt http://www.twitter..._', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.twt')) {
+    const teks = text.replace(/.twt /, "")
+    axios.get(`https://mhankbarbar.tech/api/twit?url=${teks}&apiKey=${apibarbar}`).then((res) => {
+      conn.sendMessage(id, '[ WAIT ] Mendownload⏳ silahkan tunggu', MessageType.text, { quoted: m })
+      let hasil = `Klik link dan download hasilnya!\n*Link* : ${res.data.result}\n*Judul* : ${res.data.title}\n${res.data.quote}`;
+      conn.sendMessage(id, hasil, MessageType.text, { quoted: m });
+
+    })
+  }
+
+
+  //traslate enggris
+  if (text.includes('.Tl')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .tl apa kabar_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.tl')) {
+    const gh = text.split(".tl ")[1];
+    const text1 = gh.split("/")[0];
+    const text2 = gh.split("/")[1];
+    axios.get(`https://api-translate.azharimm.tk/translate?engine=google&text=${text1}&to=${text2}`)
+      .then((res) => {
+        let hasil = `*Translate* : ${res.data.data.result}`;
+        conn.sendMessage(id, hasil, MessageType.text, { quoted: m })
+      })
+  }
+
+  if (text.includes('.Rate')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .rate seberapa ganteng lexa_', MessageType.text, { quoted: m });
+
+  }
+  if (text.includes('.rate')) {
+    const teks = text.replace(/./, '')
+    const truth = [
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10',
+      '11',
+      '12',
+      '13',
+      '14',
+      '15',
+      '16',
+      '17',
+      '18',
+      '19',
+      '20',
+      '21',
+      '22',
+      '23',
+      '24',
+      '25',
+      '26',
+      '27',
+      '28',
+      '29',
+      '30',
+      '31',
+      '32',
+      '33',
+      '34',
+      '35',
+      '36',
+      '37',
+      '38',
+      '39',
+      '40',
+      '41',
+      '42',
+      '43',
+      '44',
+      '45',
+      '46',
+      '47',
+      '48',
+      '49',
+      '50',
+      '51',
+      '52',
+      '53',
+      '54',
+      '55',
+      '56',
+      '57',
+      '58',
+      '59',
+      '60',
+      '61',
+      '62',
+      '63',
+      '64',
+      '65',
+      '66',
+      '67',
+      '68',
+      '69',
+      '70',
+      '71',
+      '72',
+      '73',
+      '74',
+      '75',
+      '76',
+      '77',
+      '78',
+      '79',
+      '80',
+      '81',
+      '82',
+      '83',
+      '84',
+      '85',
+      '86',
+      '87',
+      '88',
+      '89',
+      '90',
+      '91',
+      '92',
+      '93',
+      '94',
+      '95',
+      '96',
+      '97',
+      '99',
+      '99',
+      '100']
+    const ttrth = truth[Math.floor(Math.random() * truth.length)]
+    conn.sendMessage(id, 'Pertanyaan : *' + teks + '*\n\nRating : ' + ttrth + '%', MessageType.text, { quoted: m })
+  }
+
+  if (text.includes('.Paper1')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .paper1 Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.paper1')) {
+    const teks = text.replace(/.paper1 /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=burn_paper&text=${teks}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Block')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .block Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.block')) {
+    const teks = text.replace(/.block /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=wood_block&text=${teks}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Heart')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .heart Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.heart')) {
+    const teks = text.replace(/.heart /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=quote_on_wood_heart&text=${teks}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Grass')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .grass Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.grass')) {
+    const teks = text.replace(/.grass /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=message_under_the_grass&text=${teks}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Ocean')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .ocean Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.ocean')) {
+    const teks = text.replace(/.ocean /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=underwater_ocean&text=${teks}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Board')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .board Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.board')) {
+    const teks = text.replace(/.board /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=wooden_boards&text=${teks}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Mwolf')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .mwolf Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.mwolf')) {
+    const teks = text.replace(/.mwolf /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=wolf_metal&text=${teks}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Mglow')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .mglow Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.mglow')) {
+    const teks = text.replace(/.mglow /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=metalic_text_glow&text=${teks}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Bit8')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .bit8 Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.bit8')) {
+    const gh = text.split(".but8 ")[1];
+    const text1 = gh.split("/")[0];
+    const text2 = gh.split("/")[1];
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=bit8&text1=${text1}&text2=${text2}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Hpotter')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .Hpotter Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.hpotter')) {
+    const teks = text.replace(/.hpotter /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=harry_potter&text=${teks}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Pubg')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .pubg Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.pubg')) {
+    const gh = text.split(".pubg ")[1];
+    const text1 = gh.split("/")[0];
+    const text2 = gh.split("/")[1];
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=pubg&text1=${text1}&text2=${text2}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Cfire')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .Cfire Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.cfire')) {
+    const teks = text.replace(/.cfire /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=crossfire&text=${teks}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Wface1')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .Wface1 Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.wface1')) {
+    const teks = text.replace(/.wface1 /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=warface&text=${teks}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Wface2')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .Wface2 Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.wface2')) {
+    const teks = text.replace(/.wface2 /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=warface2&text=${teks}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Battlef')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .Battlef Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.batllef')) {
+    const gh = text.split(".battlef ")[1];
+    const text1 = gh.split("/")[0];
+    const text2 = gh.split("/")[1];
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=battlefield4&text1=${text1}&text2=${text2}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Lol')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .lol Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.lol')) {
+    const teks = text.replace(/.lol /, "")
+    axios.get(`https://tobz-api.herokuapp.com/api/photooxy?theme=league_of_legends&text=${teks}&apikey=${tobzkey}`)
+      .then((res) => {
+        imageToBase64(res.data.result)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Csgo')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .csgo Lexa_', MessageType.text, { quoted: m });
+          }
