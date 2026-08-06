@@ -23,7 +23,7 @@ r = "\033[0m"
 def bot_whatsapp():
     os.system("clear")
     print("Menjalankan Bot WhatsApp...\n")
-    subprocess.run(["node", "bot/bot.js"])
+    subprocess.run(["node", "bot.js"])
     
 def http_status():
     url = input("URL : ").strip()
