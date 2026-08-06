@@ -452,3 +452,515 @@ _“jauhilah api neraka, walau hanya dengan bersedekah sebiji kurma (sedikit). J
   //intro grup
   if (text.includes('intro')) {
     conn.sendMessage(id,
+      ────────────────
+    Hai
+    Selamat datang di
+    ${groupName}
+    Jangan lupa baca rules
+    Ketik .Rules
+      ────────────────
+
+╔════════════════════
+║──────〘  *Intro* 〙───────
+╠════════════════════
+╠≽️ *Nama*
+╠≽️ *Umur*
+╠≽️ *Asal Kota*
+╠≽️ *Gender*
+╠════════════════════
+║──────── *Lexa* ──────── 
+║  ▌│█║▌║▌║║▌║▌║█│▌▌│█║
+║  ▌│█║▌║▌║║▌║▌║█│▌▌│█║
+║──────── *Lexa* ────────
+╠════════════════════
+╠════════════════════` , MessageType.text);
+  }
+
+  //Tag
+  if (text.includes('.Tagme')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.tagme')) {
+    var nomor = m.participant
+    const options = {
+      text: `@${nomor.split("@s.whatsapp.net")[0]} Hai kak 🤗`,
+      contextInfo: { mentionedJid: [nomor] }
+    }
+    conn.sendMessage(id, options, MessageType.text)
+  }
+
+
+  //notifikasi
+  if (text.includes('!notif')) {
+    const value = text.replace(/!notif /, '')
+    var nomor = m.participant
+    const group = await conn.groupMetadata(id)
+    const member = group['participants']
+    const ids = []
+    member.map(async adm => {
+      ids.push(adm.id.replace('c.us', 's.whatsapp.net'))
+    })
+    const options = {
+      text: `Notif dari @${nomor.split("@s.whatsapp.net")[0]}\n*Pesan : ${value}*`,
+      contextInfo: { mentionedJid: ids },
+      quoted: m
+    }
+    conn.sendMessage(id, options, MessageType.text)
+  }
+
+  //Get ping
+  if (text.includes('.Ping')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil', MessageType.text, { quoted: m });
+  }
+  else if (text == '.ping') {
+    const timestamp = speed();
+    const latensi = speed() - timestamp
+    conn.sendMessage(id, `PONG!!\n_Speed : ${latensi.toFixed(4)} Second_`, MessageType.text, { quoted: m })
+  }
+
+  //Nulis dibuku
+  if (text.includes('.Nulis')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .nulis Lexa love udan_', MessageType.text, { quoted: m });
+  }
+  //Pengucapan ulang
+  if (text.includes('.Say')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .say Lexa gans_', MessageType.text, { quoted: m });
+  }
+  if (text.includes(".say")) {
+    const teks = text.replace(/.say /, "")
+    conn.sendMessage(id, teks, MessageType.text)
+  }
+  //Youtube download 
+  if (text.includes('.Ytmp4')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .ytmp4 http://youtube..._', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.ytmp4')) {
+    const teks = text.replace(/.ytmp4 /, "")
+    axios.get(`https://kocakz.herokuapp.com/api/media/ytvideo?url=${teks}`).then((res) => {
+      imageToBase64(res.data.result.thumb)
+        .then(
+          (ress) => {
+            var buf = Buffer.from(ress, 'base64')
+            conn.sendMessage(id, '[ WAIT ] Mendownload...⏳ silahkan tunggu', MessageType.text, { quoted: m })
+            let hasil = `*Judul* : ${res.data.result.title}\n*Ukuran* : ${res.data.result.filesizeF}\n*Format* : MP4\n*Link* : ${res.data.result.dl_link}`;
+            conn.sendMessage(id, buf, MessageType.image, { caption: hasil, quoted: m });
+          })
+    })
+  }
+
+  if (text.includes('.yts')) {
+    const teks = text.replace(/.yts /, "")
+    axios.get(`https://docs-jojo.herokuapp.com/api/yt-play?q=${teks}`).then((res) => {
+      imageToBase64(res.data.thumb)
+        .then(
+          (ress) => {
+            var buf = Buffer.from(ress, 'base64')
+            conn.sendMessage(id, '[ WAIT ] Mendownload...⏳ silahkan tunggu', MessageType.text, { quoted: m })
+            let hasil = `*Channel* : ${res.data.channel}\n*Judul* : ${res.data.title}\n*Durasi* : ${res.data.duration}\n*Ukuran* : ${res.data.filesize}\n*View* : ${res.data.total_view}\n*Format* : MP4\n*Link* : ${res.data.link}`;
+            conn.sendMessage(id, buf, MessageType.image, { caption: hasil, quoted: m });
+          })
+    })
+  }
+
+  if (text.includes('.Ytmp3')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .ytmp3 http://www.youtube..._', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.ytmp3')) {
+    const teks = text.replace(/.ytmp3 /, "")
+    axios.get(`https://kocakz.herokuapp.com/api/media/ytaudio?url=${teks}`).then((res) => {
+      imageToBase64(res.data.result.thumb)
+        .then(
+          (ress) => {
+            var buf = Buffer.from(ress, 'base64')
+            conn.sendMessage(id, '[ WAIT ] Mendownload...⏳ silahkan tunggu', MessageType.text, { quoted: m })
+            let hasil = `*Judul* : ${res.data.result.title}\n*Ukuran* : ${res.data.result.filesizeF}\n*Format* : MP3\n*Link* : ${res.data.result.dl_link}`;
+            conn.sendMessage(id, buf, MessageType.image, { caption: hasil, quoted: m });
+          })
+    })
+  }
+
+  //Instagram download
+  if (text.includes('.Ig')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .ig http://www.instagram..._', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.ig')) {
+    const teks = text.replace(/.ig /, "")
+    axios.get(`https://mhankbarbar.tech/api/ig?url=${teks}&apiKey=${apibarbar}`).then((res) => {
+      conn.sendMessage(id, '[ WAIT ] Mendownload...⏳ silahkan tunggu', MessageType.text, { quoted: m })
+      let hasil = `Klik link dan download hasilnya!\n*Link* : ${res.data.result}`;
+      conn.sendMessage(id, hasil, MessageType.text, { quoted: m });
+    })
+  }
+
+
+  //Tiktok download
+  if (text.includes('.Tik')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .Tik https://www.tiktok..._', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.tik')) {
+    const teks = text.replace(/.tik /, "")
+    axios.get(`https://kocakz.herokuapp.com/api/media/tiktok?url=${teks}`).then((res) => {
+      conn.sendMessage(id, '[ WAIT ] Mendownload...⏳ silahkan tunggu', MessageType.text, { quoted: m })
+      let hasil = `*Nama* : ${res.data.nameInfo}\n*Caption* : ${res.data.textInfo}\n*Waktu* : ${res.data.timeInfo}\n*Link* : ${res.data.mp4direct}`;
+      conn.sendMessage(id, hasil, MessageType.text, { quoted: m });
+    })
+  }
+
+  //Facebook downloader
+  if (text.includes('.Fb')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .fb https://www.facebook..._', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.fb')) {
+    const teks = text.replace(/.fb /, "")
+    axios.get(`https://kocakz.herokuapp.com/api/media/facebook?url=${teks}`).then((res) => {
+
+      conn.sendMessage(id, '[ WAIT ] Mendownload...⏳ silahkan tunggu', MessageType.text, { quoted: m })
+      let hasil = `*Link* : ${res.data.linkHD}`;
+      conn.sendMessage(id, buf, MessageType.text, { caption: hasil, quoted: m });
+    })
+  }
+
+  //Text thunder
+  if (text.includes('.Thunder')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .thunder Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.thunder')) {
+    const teks = text.replace(/.thunder /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/thundertext?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/thundertext?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Sand1')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .sand1 Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.sand1')) {
+    const teks = text.replace(/.sand1 /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/sandsummer?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/sandsummer?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Neon3d')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .neon3d Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.neon3d')) {
+    const teks = text.replace(/.neon3d /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/text3d?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/text3d?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Blackpink')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .Blackpink Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.blackpink')) {
+    const teks = text.replace(/.blackpink /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/blackpink?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/blackpink?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+
+  if (text.includes('.Cloud')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .cloud Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.cloud')) {
+    const teks = text.replace(/.cloud /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/realcloud?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/realcloud?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Sky')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .sky Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.sky')) {
+    const teks = text.replace(/.sky /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/cloudsky?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/cloudsky?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Sand2')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .sand2 Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.sand2')) {
+    const teks = text.replace(/.sand2 /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/sandwrite?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/sandwrite?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Sand3')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .sand3 Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.sand3')) {
+    const teks = text.replace(/.sand3 /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/sandsummery?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/sandsummery?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Sand4')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .sand4 Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.sand4')) {
+    const teks = text.replace(/.sand4 /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/sandengraved?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/sandengraved?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Balon')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .balon Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.balon')) {
+    const teks = text.replace(/.balon /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/foilballoon?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/foilballoon?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Metal')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .metal Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.metal')) {
+    const teks = text.replace(/.metal /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/metaldark?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/metaldark?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Old')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .old Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.old')) {
+    const teks = text.replace(/.old /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/old1917?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/old1917?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Holo')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .holo Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.holo')) {
+    const teks = text.replace(/.holo /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/holographic?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/holographic?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+
+
+  if (text.includes('.Coding')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .coding Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.coding')) {
+    const teks = text.replace(/.coding /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/matrixtext?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/matrixtext?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.tahta')) {
+    var teks = text.replace(/.tahta /, "")
+    axios.get(`https://api.vhtear.com/hartatahta?text=${teks}&apikey=${apivhtear}`)
+      .then((res) => {
+        imageToBase64(`https://api.vhtear.com/hartatahta?text=${teks}&apikey=${apivhtear}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.luxy')) {
+    var teks = text.replace(/.luxy /, "")
+    var url = "https://arugaz.my.id/api/textpro/luxury?text=" + teks;
+
+    axios.get(url)
+      .then((res) => {
+        imageToBase64(url)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+
+  if (text.includes('.Neon4')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .neon4 Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.neon4')) {
+    const teks = text.replace(/.neon4 /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/bokehtext?text=${teks}`)
+      .then((res) => {
+        imageToBase64(res.data.url)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+  if (text.includes('.Neon5')) {
+    conn.sendMessage(id, 'Silakan ulangi command dengan huruf kecil\n_contoh : .neon5 Lexa_', MessageType.text, { quoted: m });
+  }
+  if (text.includes('.neon5')) {
+    const teks = text.replace(/.neon5 /, "")
+    axios.get(`https://arugaz.my.id/api/textpro/greenneon?text=${teks}`)
+      .then((res) => {
+        imageToBase64(`https://arugaz.my.id/api/textpro/greenneon?text=${teks}`)
+          .then(
+            (ress) => {
+              conn.sendMessage(id, '[ WAIT ] Membuat teks⏳ silahkan tunggu', MessageType.text, { quoted: m })
+              var buf = Buffer.from(ress, 'base64')
+              conn.sendMessage(id, buf, MessageType.image, { quoted: m })
+            })
+      })
+  }
+
+
+  else if (text == '.kodebahasa') {
+    conn.sendMessage(id, `Afrikaans = af
+Albanian = sq
+Amharic = am
+Arabic = ar
+Armenian = hy
+Azerbaijani = az
+Basque = eu
+Belarusian = be
+Bengali = bn
+Bosnian = bs
+Bulgarian = bg
+Catalan = ca
+Cebuano = ceb
+Chinese (Simplified) = zh-CN
+Chinese (Traditional) = zh-TW
+Corsican = co
+Croatian = hr
+Czech = cs
+Danish = da
+Dutch = nl
+English = en
+Esperanto = eo
+Estonian = et
+Finnish = fi
+French = fr
+Frisian = fy
+Galician = gl
+Georgian = ka
+German = de
+Greek = el
+Gujarati = gu
+Haitian Creole = ht
+Hausa = ha
+Hawaiian = haw
+Hebrew = h
