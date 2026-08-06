@@ -32,22 +32,8 @@ const vcard = 'BEGIN:VCARD\n'
   + 'TEL;type=CELL;type=VOICE;waid=6282223014661:+62 822-2301-4661\n' //Nomor whatsapp kamu
   + 'END:VCARD'
 //
-const
-  {
-    WAConnection,
-    MessageType,
-    Presence,
-    MessageOptions,
-    Mimetype,
-    WALocationMessage,
-    WA_MESSAGE_STUB_TYPES,
-    ReconnectMode,
-    ProxyAgent,
-    waChatKey,
-    GroupSettingChange,
-    mentionedJid,
-    processTime,
-  } = require("@adiwajshing/baileys");
+const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require("@whiskeysockets/baileys");
+
 var jam = moment().format("HH:mm");
 // OCR Library
 
@@ -72,25 +58,30 @@ conn.on('credentials-updated', () => {
   console.log(`credentials updated$`)
   const authInfo = conn.base64EncodedAuthInfo() // get all the auth info we need to restore this session
   fs.writeFileSync('./session.json', JSON.stringify(authInfo, null, '\t')) // save this info to a file
-})
-fs.existsSync('./session.json') && conn.loadAuthInfo('./session.json')
-// uncomment the following line to proxy the connection; some random proxy I got off of: https://proxyscrape.com/free-proxy-list
-//conn.connectOptions.agent = ProxyAgent ('http://1.0.180.120:8080')
-conn.connect();
+async function startBot() {
+    const { state, saveCreds } = await useMultiFileAuthState('session');
 
+    const conn = makeWASocket({
+        auth: state,
+        printQRInTerminal: true
+    });
 
-conn.on('message-status-update', json => {
-  const participant = json.participant ? ' (' + json.participant + ')' : '' // participant exists when the message is from a group
-})
-setInterval(function () {
-  for (i = 0; i < 3; i++) {
-    console.log(`[ ${moment().format("HH:mm:ss")} ] => HI! I'm lexa :)`)
-  }
-}, 15000)
+    conn.ev.on('creds.update', saveCreds);
 
-//function
+    conn.ev.on('connection.update', (update) => {
+        const { connection, lastDisconnect } = update;
+        if (connection === 'close') {
+            const shouldReconnect = lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
+            console.log('Koneksi terputus, mencoba lagi...', shouldReconnect);
+            if (shouldReconnect) startBot();
+        } else if (connection === 'open') {
+            console.log(`[ ${moment().format("HH:mm:ss")} ] => Bot WhatsApp Berhasil Terhubung!`);
+        }
+    });
+}
 
-conn.on('message-new', async (m) => {
+startBot();
+  
   const messageContent = m.message
   const text = m.message.conversation
   let id = m.key.remoteJid
