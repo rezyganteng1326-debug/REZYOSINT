@@ -963,4 +963,4 @@ Gujarati = gu
 Haitian Creole = ht
 Hausa = ha
 Hawaiian = haw
-Hebrew = h
+Hebrew = he or iw
