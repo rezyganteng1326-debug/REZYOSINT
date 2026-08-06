@@ -79,30 +79,6 @@ async function startBot() {
   });
 
   // (LETAKKAN conn.ev.on('messages.upsert', ...) MILIKMU DI BAWAH SINI)
-  
-    } else {
-      console.log("\n[!] Menampilkan QR Code, silakan scan melalui WhatsApp...");
-      conn.ev.on('connection.update', (update) => {
-        const { qr } = update;
-        if (qr) {
-          qrcode.generate(qr, { small: true });
-        }
-      });
-    }
-  }
-
-  conn.ev.on('connection.update', (update) => {
-    const { connection, lastDisconnect } = update;
-
-    if (connection === 'close') {
-      const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
-      if (shouldReconnect) {
-        startBot();
-      }
-    } else if (connection === 'open') {
-      console.log(`\n[ ${moment().format("HH:mm:ss")} ] ${BotName} Berhasil Terhubung!`);
-    }
-  });
 
   // ===================================================
   // SAMPAI DI SINI! (Di bawah ini adalah conn.ev.on('messages.upsert') bawaan kamu)
