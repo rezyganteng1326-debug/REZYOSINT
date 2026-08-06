@@ -99,15 +99,30 @@ printQRInTerminal: false
   const { version } = await fetchLatestBaileysVersion();
 
   const conn = makeWASocket({
-    version,
-    auth: state,
-    printQRInTerminal: true
+  version,
+  auth: state,
+  printQRInTerminal: false
   });
 
   // Event listener untuk menyimpan kredensial
-  conn.ev.on('creds.update', saveCreds);
+  if (!conn.authState.creds.registered) {
+  console.log("1. Scan QR");
+  console.log("2. Pairing Code");
 
-  // Connection Handler
+  const pilihan = await question("Pilih (1/2): ");
+
+  if (pilihan.trim() === "2") {
+    let phoneNumber = await question("Masukkan nomor WA: ");
+    phoneNumber = phoneNumber.replace(/\D/g, "");
+
+    const code = await conn.requestPairingCode(phoneNumber);
+    console.log("Pairing Code:", code.match(/.{1,4}/g).join("-"));
+  } else {
+    conn.ev.on("connection.update", ({ qr }) => {
+      if (qr) qrcode.generate(qr, { small: true });
+    });
+  }
+  }
   conn.ev.on('connection.update', (update) => {
     const { connection, lastDisconnect, qr } = update;
     
