@@ -1,45 +1,46 @@
+// ===================================================
+// BARIS 1: PASTE SCRIPT BARU DARI SINI
+// ===================================================
 const {
   default: makeWASocket,
   useMultiFileAuthState,
   DisconnectReason,
-  fetchLatestBaileysVersion,
-  delay
+  fetchLatestBaileysVersion
 } = require("@whiskeysockets/baileys");
 
 const qrcode = require("qrcode-terminal");
 const moment = require("moment");
-const cheerio = require("cheerio");
-const imageToBase64 = require('image-to-base64');
+const readline = require("readline");
 const axios = require("axios");
 const speed = require('performance-now');
 const fs = require("fs");
-const fetch = require('node-fetch');
 
-// Setting Constants
-const apivhtear = 'apikey';
-const apibarbar = 'apikey';
-const tobzkey = 'apikey';
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+const question = (text) => new Promise((resolve) => rl.question(text, resolve));
+
 const BotName = 'Lexa';
-const wa = 'https://chat.whatsapp.com/FQNUK5VFD68GZaB0UlXjst';
-const eror = 'Info fitur Error';
-const ow = 'Mrf.zvx';
 const nomorowner = '082223014661';
-const pulsa = '082223014661';
-const dana = '082223014661';
-const ovo = '082223014661';
 
-  // ... (Baris 20-29: Pembuatan socket & saveCreds)
+async function startBot() {
+  const { state, saveCreds } = await useMultiFileAuthState('session_baileys');
+  const { version } = await fetchLatestBaileysVersion();
+
   const conn = makeWASocket({
     version,
     auth: state,
-    printQRInTerminal: false
+    printQRInTerminal: false,
+    logger: require('pino')({ level: 'silent' })
   });
 
   conn.ev.on('creds.update', saveCreds);
 
-  // ==================== MULAI DARI SINI ====================
   if (!conn.authState.creds.registered) {
-    console.log("\n--- PILIH METODE LOGIN ---");
+    console.log("\n========================================");
+    console.log("       PILIH METODE LOGIN WHATSAPP      ");
+    console.log("========================================");
     console.log("1. Scan QR Code");
     console.log("2. Pairing Code (Nomor Telepon)");
     
@@ -53,7 +54,7 @@ const ovo = '082223014661';
         let code = await conn.requestPairingCode(phoneNumber);
         code = code?.match(/.{1,4}/g)?.join("-") || code;
         console.log(`\n========================================`);
-        console.log(`PAIRING CODE KAMU: ${code}`);
+        console.log(`KODE PAIRING KAMU : ${code}`);
         console.log(`========================================\n`);
       }, 3000);
 
@@ -67,17 +68,31 @@ const ovo = '082223014661';
       });
     }
   }
-  // ==================== SAMPAI DI SINI ====================
 
-  // Lanjutan kode connection.update bawaan kamu:
   conn.ev.on('connection.update', (update) => {
-    // ...
-    
-const vcard = 'BEGIN:VCARD\n'
-  + 'VERSION:3.0\n'
-  + 'FN:Mrf.zvx\n'
-  + 'ORG:Lexa;\n'
-  + 'TEL;type=CELL;type=VOICE;waid=6282223014661:+62 822-2301-4661\n'
+    const { connection, lastDisconnect } = update;
+
+    if (connection === 'close') {
+      const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
+      if (shouldReconnect) {
+        startBot();
+      }
+    } else if (connection === 'open') {
+      console.log(`\n[ ${moment().format("HH:mm:ss")} ] ${BotName} Berhasil Terhubung!`);
+    }
+  });
+
+  // ===================================================
+  // SAMPAI DI SINI! (Di bawah ini adalah conn.ev.on('messages.upsert') bawaan kamu)
+  // ===================================================
+
+  conn.ev.on('messages.upsert', async (m) => {
+    // ... isi fitur bot kamu (.rules, .seberapabucin, dll)
+  });
+}
+
+startBot();
+             
   + 'END:VCARD';
 
 async function startBot() {
