@@ -451,13 +451,17 @@ _“jauhilah api neraka, walau hanya dengan bersedekah sebiji kurma (sedikit). J
 
   //intro grup
   if (text.includes('intro')) {
-    conn.sendMessage(id,
-      ────────────────
-    Hai
-    Selamat datang di
-    ${groupName}
-    Jangan lupa baca rules
-    Ketik .Rules
+    let intro = `────────────────
+
+Hai 👋
+Selamat datang di
+${groupName}
+
+Jangan lupa baca rules.
+Ketik .rules`;
+
+    conn.sendMessage(id, intro, MessageType.text, { quoted: m });
+  }
       ────────────────
 
 ╔════════════════════
