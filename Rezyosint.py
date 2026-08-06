@@ -213,7 +213,7 @@ def main():
         now = datetime.now()
         hari, bulan, tahun = now.strftime("%d"), now.strftime("%m"), now.strftime("%Y")
     menu = {
-        '1': bot_whatsapp
+        '1': bot_whatsapp,
         '2': http_status,
         '3': url_parser,
         '4': website_info,
