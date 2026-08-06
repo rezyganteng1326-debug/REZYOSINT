@@ -28,6 +28,51 @@ const pulsa = '082223014661';
 const dana = '082223014661';
 const ovo = '082223014661';
 
+  // ... (Baris 20-29: Pembuatan socket & saveCreds)
+  const conn = makeWASocket({
+    version,
+    auth: state,
+    printQRInTerminal: false
+  });
+
+  conn.ev.on('creds.update', saveCreds);
+
+  // ==================== MULAI DARI SINI ====================
+  if (!conn.authState.creds.registered) {
+    console.log("\n--- PILIH METODE LOGIN ---");
+    console.log("1. Scan QR Code");
+    console.log("2. Pairing Code (Nomor Telepon)");
+    
+    const pilihan = await question("\nMasukkan pilihan (1/2): ");
+
+    if (pilihan.trim() === "2") {
+      let phoneNumber = await question("\nMasukkan nomor WA Bot (Contoh: 6282223014661): ");
+      phoneNumber = phoneNumber.replace(/[^0-9]/g, '');
+
+      setTimeout(async () => {
+        let code = await conn.requestPairingCode(phoneNumber);
+        code = code?.match(/.{1,4}/g)?.join("-") || code;
+        console.log(`\n========================================`);
+        console.log(`PAIRING CODE KAMU: ${code}`);
+        console.log(`========================================\n`);
+      }, 3000);
+
+    } else {
+      console.log("\n[!] Menampilkan QR Code, silakan scan melalui WhatsApp...");
+      conn.ev.on('connection.update', (update) => {
+        const { qr } = update;
+        if (qr) {
+          qrcode.generate(qr, { small: true });
+        }
+      });
+    }
+  }
+  // ==================== SAMPAI DI SINI ====================
+
+  // Lanjutan kode connection.update bawaan kamu:
+  conn.ev.on('connection.update', (update) => {
+    // ...
+    
 const vcard = 'BEGIN:VCARD\n'
   + 'VERSION:3.0\n'
   + 'FN:Mrf.zvx\n'
