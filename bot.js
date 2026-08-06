@@ -22,13 +22,13 @@ async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState('session_baileys');
   const { version } = await fetchLatestBaileysVersion();
 
-  const conn = makeWASocket({
+    const conn = makeWASocket({
     version,
     auth: state,
-    printQRInTerminal: false,
+    printQRInTerminal: false, // <-- WAJIB set ke false agar QR tidak otomatis muncul!
     logger: require('pino')({ level: 'silent' })
   });
-
+  
   conn.ev.on('creds.update', saveCreds);
 
   // LOGIKA LOGIN PILIHAN
