@@ -77,16 +77,7 @@ async function startBot() {
         } else if (connection === 'open') {
             console.log(`[ ${moment().format("HH:mm:ss")} ] => Bot WhatsApp Berhasil Terhubung!`);
         }
-    });
-}
-
-startBot();
-  
-  const messageContent = m.message
-  const text = m.message.conversation
-  let id = m.key.remoteJid
-  const isGroup = id.endsWith('@g.us')
-  const totalchat = await conn.chats.all()
+  conn.on('chat-update', async (chatUpdate) => {
   const sender = isGroup ? m.participant : m.key.remoteJid
   const groupMetadata = isGroup ? await conn.groupMetadata(id) : ''
   const groupName = isGroup ? groupMetadata.subject : ''
