@@ -88,12 +88,9 @@ async function startBot() {
     // ... isi fitur bot kamu (.rules, .seberapabucin, dll)
   });
 }
-
-startBot();
              
   + 'END:VCARD';
 
-printQRInTerminal: false
   // Menggunakan authentication state modern berbasis multi-file
   const { state, saveCreds } = await useMultiFileAuthState('session_baileys');
   const { version } = await fetchLatestBaileysVersion();
