@@ -95,13 +95,6 @@ async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState('session_baileys');
   const { version } = await fetchLatestBaileysVersion();
 
-  const conn = makeWASocket({
-    version,
-    auth: state,
-    printQRInTerminal: false,
-    logger: require("pino")({ level: "silent" })
-});
-
   // Event listener untuk menyimpan kredensial
   if (!conn.authState.creds.registered) {
     console.log("\n========================================");
@@ -141,7 +134,7 @@ async function startBot() {
     console.log("Pairing Code:", code.match(/.{1,4}/g).join("-"));
   } else {
     conn.ev.on("connection.update", ({ qr }) => {
-      if (qr) qrcode.generate(qr, { small: true });
+    
     });
   }
   }
