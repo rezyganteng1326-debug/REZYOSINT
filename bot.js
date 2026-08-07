@@ -15,7 +15,12 @@
 */
 
 // Import Module 
-const { makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion } = require("baileys")
+const {
+  default: makeWASocket,
+  useMultiFileAuthState,
+  fetchLatestBaileysVersion,
+  DisconnectReason
+} = require("@whiskeysockets/baileys");
 const pino = require("pino")
 const chalk = require("chalk")
 const readline = require("readline")
