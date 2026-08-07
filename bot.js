@@ -124,28 +124,9 @@ async function startBot() {
     }
   }
 
-  const pilihan = await question("Pilih (1/2): ");
-
-  if (pilihan.trim() === "2") {
-    let phoneNumber = await question("Masukkan nomor WA: ");
-    phoneNumber = phoneNumber.replace(/\D/g, "");
-
-    const code = await conn.requestPairingCode(phoneNumber);
-
-    console.log("Pairing Code:", code.match(/.{1,4}/g).join("-"));
-  } else {
-    conn.ev.on("connection.update", ({ qr }) => {
-    
-    });
-  }
   conn.ev.on('connection.update', (update) => {
     const { connection, lastDisconnect, qr } = update;
-    
-    if (qr && conn.authState.creds.registered) {
-    qrcode.generate(qr, { small: true });
-    console.log(`[ ${moment().format("HH:mm:ss")} ] Scan QR Code di atas!`);
-    }
-
+  
     if (connection === 'close') {
       const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
       console.log('Koneksi terputus. Menghubungkan kembali:', shouldReconnect);
