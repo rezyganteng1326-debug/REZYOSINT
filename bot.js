@@ -131,12 +131,12 @@ async function startBot() {
     phoneNumber = phoneNumber.replace(/\D/g, "");
 
     const code = await conn.requestPairingCode(phoneNumber);
+
     console.log("Pairing Code:", code.match(/.{1,4}/g).join("-"));
   } else {
     conn.ev.on("connection.update", ({ qr }) => {
     
     });
-  }
   }
   conn.ev.on('connection.update', (update) => {
     const { connection, lastDisconnect, qr } = update;
