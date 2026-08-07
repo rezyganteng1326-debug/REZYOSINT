@@ -70,7 +70,7 @@ async function connectToWhatsApp() {
   })
 
   // Handle Pairing Code
-  if (usePairingCode && !lenwy.authState.creds.registered) {
+  if (usePairingCode && !state.creds.registered) {
     try {
       const phoneNumber = await question('☘️ Masukan Nomor Yang Diawali Dengan 62 :\n')
       const code = await lenwy.requestPairingCode(phoneNumber.trim())
@@ -84,15 +84,17 @@ async function connectToWhatsApp() {
 
     // Informasi Koneksi
     lenwy.ev.on("connection.update", (update) => {
-        const { connection, lastDisconnect } = update
-       if (connection === "close") {
-    console.log("lastDisconnect =", lastDisconnect)
-    console.log(chalk.red("❌ Koneksi Terputus"))
-        } else if ( connection === "open") {
-            console.log(chalk.green("✔  Bot Berhasil Terhubung Ke WhatsApp"))
-        }
-    })
+        const { connection, lastDisconnect } = update;
+       if (connection === "close") 
 
+    console.log(update);
+
+    if (connection === "close") {
+        console.log(lastDisconnect?.error);
+    } else if (connection === "open") {
+        console.log("Bot berhasil terhubung");
+    }
+});
     // Respon Pesan Masuk
     lenwy.ev.on("messages.upsert", async (m) => {
         const msg = m.messages[0]
