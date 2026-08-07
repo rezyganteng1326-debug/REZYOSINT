@@ -89,55 +89,6 @@ async function startBot() {
   });
 }
              
-  + 'END:VCARD';
-
-  // Menggunakan authentication state modern berbasis multi-file
-  const { state, saveCreds } = await useMultiFileAuthState('session_baileys');
-  const { version } = await fetchLatestBaileysVersion();
-
-  // Event listener untuk menyimpan kredensial
-  if (!conn.authState.creds.registered) {
-    console.log("\n========================================");
-    console.log("       PILIH METODE LOGIN WHATSAPP");
-    console.log("========================================");
-    console.log("1. Scan QR Code");
-    console.log("2. Pairing Code (Nomor Telepon)");
-
-    const pilihan = await question("\nMasukkan pilihan (1/2): ");
-
-    if (pilihan.trim() === "2") {
-        let phoneNumber = await question("Masukkan nomor WA (628xxxx): ");
-        phoneNumber = phoneNumber.replace(/[^0-9]/g, "");
-
-        setTimeout(async () => {
-            try {
-                let code = await conn.requestPairingCode(phoneNumber);
-                code = code?.match(/.{1,4}/g)?.join("-") || code;
-
-                console.log("\n========================================");
-                console.log("PAIRING CODE : " + code);
-                console.log("========================================\n");
-            } catch (e) {
-                console.log("Gagal membuat Pairing Code:", e.message);
-            }
-        }, 3000);
-    }
-  }
-
-  conn.ev.on('connection.update', (update) => {
-    const { connection, lastDisconnect, qr } = update;
-  
-    if (connection === 'close') {
-      const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
-      console.log('Koneksi terputus. Menghubungkan kembali:', shouldReconnect);
-      if (shouldReconnect) {
-        startBot();
-      }
-    } else if (connection === 'open') {
-      console.log(`[ ${moment().format("HH:mm:ss")} ] ${BotName} Siap Digunakan!`);
-    }
-  });
-
   // Log interval sederhana
   setInterval(() => {
     console.log(`[ ${moment().format("HH:mm:ss")} ] => HI! I'm ${BotName} :)`);
