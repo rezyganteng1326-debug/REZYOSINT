@@ -85,9 +85,9 @@ async function connectToWhatsApp() {
     // Informasi Koneksi
     lenwy.ev.on("connection.update", (update) => {
         const { connection, lastDisconnect } = update
-        if ( connection === "close") {
-            console.log(chalk.red("❌  Koneksi Terputus, Mencoba Menyambung Ulang"))
-            connectToWhatsApp()
+        if (connection === "close") {
+    console.log(lastDisconnect)
+    console.log(chalk.red("❌ Koneksi Terputus"))
         } else if ( connection === "open") {
             console.log(chalk.green("✔  Bot Berhasil Terhubung Ke WhatsApp"))
         }
